@@ -3,34 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Number Tracer</title>
-    <link rel="stylesheet" href="style.css">
+    <title>MASTER TOOL - Phone Validator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #00ff88;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        input {
+            width: 250px;
+        }
+        button {
+            background-color: #00ff88;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #result {
+            margin-top: 20px;
+            text-align: left;
+            display: inline-block;
+            background: #1e1e1e;
+            padding: 15px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
+    <h1>📱 MASTER TOOL</h1>
+    <p>Enter phone number with country code (e.g. +923001234567)</p>
+    <input type="text" id="phone" placeholder="Enter phone number">
+    <button onclick="validatePhone()">Check Number</button>
 
-    <div class="container">
-        <h1>Smart Number Tracer</h1>
-        <p class="subtitle">Enter a number to get its details</p>
+    <div id="result"></div>
 
-        <div class="form-group">
-            <label for="phoneNumber">ENTER NUMBER</label>
-            <input type="text" id="phoneNumber" placeholder="e.g. +923xxxxxxxxx">
-        </div>
+    <script>
+        async function validatePhone() {
+            const phone = document.getElementById("phone").value;
+            const apiKey = "47b496561f414f0e884dd348e9e42357";
+            const proxyUrl = "https://api.allorigins.win/raw?url="; // CORS bypass
 
-        <button id="traceButton">Trace Number</button>
+            if (!phone) {
+                alert("Please enter a phone number");
+                return;
+            }
 
-        <div id="result-container">
-            <h3 style="color: #ff3333;">Tracer Results</h3>
-            <p class="result-item"><strong>Valid:</strong> <span id="valid"></span></p>
-            <p class="result-item"><strong>Country:</strong> <span id="country"></span></p>
-            <p class="result-item"><strong>Location:</strong> <span id="location"></span></p>
-            <p class="result-item"><strong>Carrier:</strong> <span id="carrier"></span></p>
-            <p class="result-item"><strong>Type:</strong> <span id="type"></span></p>
-            <div id="error-message" class="error" style="display: none;"></div>
-        </div>
-    </div>
+            try {
+                const apiUrl = `https://phonevalidation.abstractapi.com/v1/?api_key=${apiKey}&phone=${encodeURIComponent(phone)}`;
+                const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+                const data = await response.json();
 
-    <script src="script.js"></script>
-
+                document.getElementById("result").innerHTML = `
+                    <strong>Number:</strong> ${data.phone}<br>
+                    <strong>Valid:</strong> ${data.valid}<br>
+                    <strong>Country:</strong> ${data.country?.name || "N/A"}<br>
+                    <strong>Location:</strong> ${data.location || "N/A"}<br>
+                    <strong>Carrier:</strong> ${data.carrier || "N/A"}<br>
+                    <strong>Line Type:</strong> ${data.type || "N/A"}
+                `;
+            } catch (error) {
+                document.getElementById("result").innerHTML = "Error fetching data!";
+                console.error(error);
+            }
+        }
+    </script>
 </body>
 </html>
