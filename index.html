@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Number Tracer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Smart Number Tracer</h1>
+        <p class="subtitle">Enter a number to get its details</p>
+
+        <div class="form-group">
+            <label for="phoneNumber">ENTER NUMBER</label>
+            <input type="text" id="phoneNumber" placeholder="e.g. +923xxxxxxxxx">
+        </div>
+
+        <button id="traceButton">Trace Number</button>
+
+        <div id="result-container">
+            <h3 style="color: #ff3333;">Tracer Results</h3>
+            <p class="result-item"><strong>Valid:</strong> <span id="valid"></span></p>
+            <p class="result-item"><strong>Country:</strong> <span id="country"></span></p>
+            <p class="result-item"><strong>Location:</strong> <span id="location"></span></p>
+            <p class="result-item"><strong>Carrier:</strong> <span id="carrier"></span></p>
+            <p class="result-item"><strong>Type:</strong> <span id="type"></span></p>
+            <div id="error-message" class="error" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
